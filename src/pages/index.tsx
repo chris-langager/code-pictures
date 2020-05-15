@@ -8,7 +8,7 @@ const HomePage: React.FC = () => {
         <link rel="icon" href="/favicon.ico" />
       </Head>
 
-      <main>This sure is a psadfage</main>
+      <main>This sure is a page and should update on merge with master.</main>
 
       <style jsx>{``}</style>
 
