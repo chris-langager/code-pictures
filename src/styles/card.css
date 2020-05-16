@@ -3,5 +3,13 @@
   height: 150px;
   background-repeat: no-repeat;
   background-size: contain;
-  border: 3px black solid;
+  border: 1px black solid;
+  cursor: pointer;
+
+  transition: all 0.2s ease-out;
+}
+
+.card:hover {
+  transform: scale(1.15);
+  box-shadow: 3px 3px 10px 2px #ccc;
 }

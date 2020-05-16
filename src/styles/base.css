@@ -36,4 +36,5 @@ body {
 .board-area {
   grid-area: board;
   margin: 0px auto;
+  padding: 15px 5px 5px 5px;
 }
