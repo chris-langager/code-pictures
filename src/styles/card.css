@@ -8,13 +8,6 @@
   transition: all 0.2s ease-out;
 }
 
-@media (max-width: 480px) {
-  .card {
-    width: 120px;
-    height: 120px;
-  }
-}
-
 .card:hover {
   transform: scale(1.1);
   box-shadow: 3px 3px 10px 2px hsla(240, 1%, 22%, 0.5);
@@ -47,18 +40,18 @@
 
 @media (max-width: 480px) {
   .card {
-    width: 110px;
-    height: 110px;
+    width: 105px;
+    height: 105px;
   }
 
   .card .picture {
-    width: 108px;
-    height: 108px;
+    width: 103px;
+    height: 103px;
   }
 
   .card .overlay {
-    width: 108px;
-    height: 108px;
+    width: 103px;
+    height: 103px;
   }
 }
 

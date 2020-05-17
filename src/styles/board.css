@@ -8,6 +8,6 @@
 @media (max-width: 480px) {
   .board {
     gap: 4px;
-    width: 580px;
+    width: 550px;
   }
 }
