@@ -55,33 +55,48 @@
   }
 }
 
+.card .overlay.spymaster {
+  display: block;
+  opacity: 0.5;
+}
+.card .overlay.spymaster.revealed {
+  opacity: 0.5;
+}
 .card .overlay.revealed {
   display: block;
+  opacity: 0.9;
 }
 
 .card .overlay.red {
-  background-color: hsla(0, 79%, 72%, 0.9);
+  background-color: hsla(0, 79%, 72%);
 }
-/* .card .overlay.red:hover {
-  background-color: hsla(10, 40%, 50%, 0.5);
-} */
 .card .overlay.blue {
-  background-color: hsla(201, 54%, 69%, 0.9);
+  background-color: hsla(201, 54%, 69%);
 }
-/* .card .overlay.blue:hover {
-  background-color: hsla(220, 40%, 50%, 0.5);
-} */
-
 .card .overlay.neutral {
-  background-color: hsla(24, 69%, 85%, 0.9);
+  background-color: hsla(24, 69%, 85%);
 }
-/* .card .overlay.neutral:hover {
-  background-color: hsla(30, 40%, 50%, 0.5);
-} */
-
 .card .overlay.death {
-  background-color: hsla(0, 0%, 20%, 0.7);
+  background-color: hsla(0, 0%, 20%);
 }
-/* .card .overlay.death:hover {
-  background-color: hsla(270, 40%, 5%, 0.5);
-} */
+
+.card .overlay.spymaster.revealed:before,
+.card .overlay.spymaster.revealed:after {
+  position: absolute;
+  content: '';
+  background-color: hsla(0, 0%, 20%);
+  opacity: 0.9;
+  display: block;
+  width: 100%;
+  height: 20px;
+  transform: rotate(-45deg);
+  left: 0;
+  right: 0;
+  top: 0;
+  bottom: 0;
+  margin: auto;
+}
+
+.card .overlay.spymaster.revealed:after {
+  transform: rotate(45deg);
+}

@@ -34,9 +34,12 @@ export const DispatchContext: Context<Dispatch<Event>> = createContext(
   (() => initialState) as React.Dispatch<Event>
 );
 
+export const SpymasterContext: Context<boolean> = createContext(false as boolean);
+
 const GamePage: React.FC = () => {
   // const [cards] = useState(newBoard());
   const [state, dispatch] = useReducer(reducer, initialState);
+  const [spyMaster, setSpymaster] = useState(false);
 
   return (
     <div className="container">
@@ -46,13 +49,16 @@ const GamePage: React.FC = () => {
       </Head>
 
       <DispatchContext.Provider value={dispatch}>
-        <div className="information-area">
-          <Information />
-        </div>
+        <SpymasterContext.Provider value={spyMaster}>
+          <div className="information-area">
+            <Information />
+            <button onClick={() => setSpymaster(!spyMaster)}> toggle spymaster</button>
+          </div>
 
-        <div className="board-area">
-          <Board cards={state.board} />
-        </div>
+          <div className="board-area">
+            <Board cards={state.board} />
+          </div>
+        </SpymasterContext.Provider>
       </DispatchContext.Provider>
     </div>
   );
@@ -71,13 +77,11 @@ function newBoard() {
   //get some random unique numbers for laying out the board
   const randomUniqueNumbers = shuffle([...Object.keys(cardIds)]);
 
-  const startingTeamsCards = randomUniqueNumbers
-    .splice(0, 9)
-    .map<Card>((i) => ({
-      id: i + '-' + cardIds[i],
-      type: startingTeam,
-      revealed: false,
-    }));
+  const startingTeamsCards = randomUniqueNumbers.splice(0, 9).map<Card>((i) => ({
+    id: i + '-' + cardIds[i],
+    type: startingTeam,
+    revealed: false,
+  }));
 
   const secondTeamsCards = randomUniqueNumbers
     .splice(0, 8)
