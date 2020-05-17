@@ -21,6 +21,13 @@
   z-index: 100;
 }
 
+@media (hover: none) {
+  .card:hover {
+    transform: none;
+    box-shadow: none;
+  }
+}
+
 .card .picture {
   position: absolute;
   background-repeat: no-repeat;
