@@ -7,8 +7,8 @@ interface Props {
 export const Board: React.FC<Props> = ({ cards }) => {
   return (
     <div className="board">
-      {cards.map((card) => (
-        <Card key={card.id} card={card}></Card>
+      {cards.map((card, i) => (
+        <Card key={i} card={card}></Card>
       ))}
     </div>
   );

@@ -1,15 +1,66 @@
 .card {
+  display: block;
   width: 150px;
   height: 150px;
-  background-repeat: no-repeat;
-  background-size: contain;
+
   border: 1px black solid;
+
   cursor: pointer;
 
   transition: all 0.2s ease-out;
 }
 
 .card:hover {
-  transform: scale(1.15);
-  box-shadow: 3px 3px 10px 2px #ccc;
+  transform: scale(1.1);
+  box-shadow: 3px 3px 10px 2px hsla(240, 1%, 22%, 0.5);
+  z-index: 100;
 }
+
+.card .picture {
+  position: absolute;
+
+  background-repeat: no-repeat;
+  background-size: contain;
+  width: 148px;
+  height: 148px;
+}
+
+.card .overlay {
+  display: none;
+  position: absolute;
+  width: 148px;
+  height: 148px;
+
+  transition: all 0.2s ease-out;
+}
+
+.card .overlay.revealed {
+  display: block;
+}
+
+.card .overlay.red {
+  background-color: hsla(0, 79%, 72%, 0.9);
+}
+/* .card .overlay.red:hover {
+  background-color: hsla(10, 40%, 50%, 0.5);
+} */
+.card .overlay.blue {
+  background-color: hsla(201, 54%, 69%, 0.9);
+}
+/* .card .overlay.blue:hover {
+  background-color: hsla(220, 40%, 50%, 0.5);
+} */
+
+.card .overlay.neutral {
+  background-color: hsla(24, 69%, 85%, 0.9);
+}
+/* .card .overlay.neutral:hover {
+  background-color: hsla(30, 40%, 50%, 0.5);
+} */
+
+.card .overlay.death {
+  background-color: hsla(0, 0%, 20%, 0.7);
+}
+/* .card .overlay.death:hover {
+  background-color: hsla(270, 40%, 5%, 0.5);
+} */

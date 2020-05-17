@@ -1,4 +1,4 @@
-export type Team = 'Red' | 'Blue';
+export type Team = 'red' | 'blue';
 export type CardType = Team | 'death' | 'neutral';
 
 export interface Card {
@@ -45,23 +45,23 @@ export function reduce(state: State, event: Event): State {
 function newGameStarted(state: State, event: NewGameStarted): State {
   //because the board is randomly generated on the server, so use that as the coin flip for who goes first
   const { board } = event.payload;
-  const redCardsCount = board.filter((card) => card.type === 'Red').length;
-  const blueCardsCount = board.filter((card) => card.type === 'Blue').length;
+  const redCardsCount = board.filter((card) => card.type === 'red').length;
+  const blueCardsCount = board.filter((card) => card.type === 'blue').length;
   return {
     ...state,
     score: {
-      Red: 0,
-      Blue: 0,
+      red: 0,
+      blue: 0,
     },
     board: event.payload.board,
-    turn: redCardsCount > blueCardsCount ? 'Red' : 'Blue',
+    turn: redCardsCount > blueCardsCount ? 'red' : 'blue',
   };
 }
 
 function cardSelected(state: State, event: CardSelected): State {
   const { id } = event.payload;
   const { turn: activeTeam, board, score } = state;
-  const passiveTeam = activeTeam === 'Red' ? 'Blue' : 'Red';
+  const passiveTeam = activeTeam === 'red' ? 'blue' : 'red';
 
   const card = board.find((card) => card.id === id);
   const otherCards = board.filter((card) => card.id !== id);
