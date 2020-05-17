@@ -1,24 +1,33 @@
+import { useContext } from 'react';
+import { GameStateContext } from '../pages/[id]';
+
 interface Props {}
 export const Information: React.FC<Props> = ({}) => {
+  const { turn, board } = useContext(GameStateContext);
+
+  const activeTeam = turn;
+  const redCardsRemaining = board.reduce(
+    (total, card) => (!card.revealed && card.type === 'red' ? total + 1 : total),
+    0
+  );
+  const blueCardsRemaining = board.reduce(
+    (total, card) => (!card.revealed && card.type === 'blue' ? total + 1 : total),
+    0
+  );
+
   return (
     <div className="information">
       <h1>Code Pictures</h1>
 
       <p>Link to this game. (click to copy)</p>
 
-      <p>Score</p>
-      <ul>
-        <li>Red - 0</li>
-        <li>Blue - 0</li>
-      </ul>
-
       <p>Cards remaining:</p>
       <ul>
-        <li>Red - 9</li>
-        <li>Blue - 8</li>
+        <li>Red - {redCardsRemaining}</li>
+        <li>Blue - {blueCardsRemaining}</li>
       </ul>
 
-      <p>It's the Red teams turn!</p>
+      <p>It's the {activeTeam} teams turn!</p>
     </div>
   );
 };
