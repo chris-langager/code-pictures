@@ -1,4 +1,4 @@
-import { Team, Card } from './reducer';
+import { Team, Card, State } from './reducer';
 
 export function newBoard() {
   //all the cards

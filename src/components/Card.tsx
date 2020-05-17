@@ -1,18 +1,19 @@
 import { Card as CardData, CardType } from '../../shared/reducer';
 import { useState, useContext } from 'react';
-import { DispatchContext, SpymasterContext } from '../pages/[id]';
+import { DispatchContext, SpymasterContext, GameStateContext } from '../pages/[id]';
 
 interface Props {
   card: CardData;
 }
 export const Card: React.FC<Props> = ({ card }) => {
+  const { winner } = useContext(GameStateContext);
   const dispatch = useContext(DispatchContext);
   const spyMaster = useContext(SpymasterContext);
 
   const { id, type, revealed } = card;
   return (
     <div
-      className="card"
+      className={`card  ${winner ? 'winner' : ''} `}
       onClick={() => dispatch({ type: 'CardSelected', payload: { id } })}
     >
       <div
@@ -26,7 +27,7 @@ export const Card: React.FC<Props> = ({ card }) => {
         overlay 
         ${type} 
         ${revealed ? 'revealed' : ''} 
-        ${spyMaster ? 'spymaster' : ''}
+        ${spyMaster || winner ? 'spymaster' : ''}
         `}
       />
     </div>

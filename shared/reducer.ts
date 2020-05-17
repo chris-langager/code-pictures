@@ -11,8 +11,7 @@ export interface State {
   id: string;
   board: Card[];
   turn: Team;
-  score: Record<Team, number>;
-  deathCardPicked: Team | null;
+  winner: Team | null;
 }
 
 export interface NewGameStarted {
@@ -36,7 +35,10 @@ export function reducer(state: State, event: Event): State {
     case 'NewGameStarted':
       return newGameStarted(state, event);
     case 'CardSelected':
-      return cardSelected(state, event);
+      const nextState = cardSelected(state, event);
+      return {
+        ...nextState,
+      };
     default:
       return state;
   }
@@ -49,18 +51,19 @@ function newGameStarted(state: State, event: NewGameStarted): State {
   const blueCardsCount = board.filter((card) => card.type === 'blue').length;
   return {
     ...state,
-    score: {
-      red: 0,
-      blue: 0,
-    },
     board: event.payload.board,
     turn: redCardsCount > blueCardsCount ? 'red' : 'blue',
   };
 }
 
 function cardSelected(state: State, event: CardSelected): State {
+  //if there is a winner, then this event is a noop
+  if (state.winner) {
+    return state;
+  }
+
   const { id } = event.payload;
-  const { turn: activeTeam, board, score } = state;
+  const { turn: activeTeam, board } = state;
   const passiveTeam = activeTeam === 'red' ? 'blue' : 'red';
 
   const card = board.find((card) => card.id === id);
@@ -78,7 +81,7 @@ function cardSelected(state: State, event: CardSelected): State {
     return {
       ...state,
       board: nextBoard,
-      deathCardPicked: activeTeam,
+      winner: passiveTeam,
     };
   }
 
@@ -102,10 +105,9 @@ function cardSelected(state: State, event: CardSelected): State {
     return {
       ...state,
       board: nextBoard,
-      score: {
-        ...score,
-        [activeTeam]: score[activeTeam] + 1,
-      },
+      winner: nextBoard.some((card) => !card.revealed && card.type === activeTeam)
+        ? null
+        : activeTeam,
     };
   }
 }

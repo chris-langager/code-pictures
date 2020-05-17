@@ -11,11 +11,7 @@ const initialState: State = {
   id: 'ABCD',
   board: board,
   turn: startingTeam,
-  score: {
-    red: 0,
-    blue: 0,
-  },
-  deathCardPicked: null,
+  winner: null,
 };
 
 export const GameStateContext: Context<State> = createContext(initialState);

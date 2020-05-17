@@ -14,6 +14,14 @@
   z-index: 100;
 }
 
+.card.winner {
+  cursor: default;
+}
+.card.winner:hover {
+  transform: none;
+  box-shadow: none;
+}
+
 @media (hover: none) {
   .card:hover {
     transform: none;
@@ -68,16 +76,16 @@
 }
 
 .card .overlay.red {
-  background-color: hsla(0, 79%, 72%);
+  background-color: var(--red);
 }
 .card .overlay.blue {
-  background-color: hsla(201, 54%, 69%);
+  background-color: var(--blue);
 }
 .card .overlay.neutral {
-  background-color: hsla(24, 69%, 85%);
+  background-color: var(--neutral);
 }
 .card .overlay.death {
-  background-color: hsla(0, 0%, 20%);
+  background-color: var(--death);
 }
 
 .card .overlay.spymaster.revealed:before,
