@@ -4,3 +4,10 @@
   gap: 5px;
   width: 800px;
 }
+
+@media (max-width: 480px) {
+  .board {
+    gap: 4px;
+    width: 600px;
+  }
+}
