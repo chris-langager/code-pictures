@@ -1,13 +1,14 @@
 .board {
   display: grid;
+  justify-content: center;
   grid-template-columns: 1fr 1fr 1fr 1fr 1fr;
   gap: 5px;
-  width: 800px;
+  width: 780px;
 }
 
 @media (max-width: 480px) {
   .board {
     gap: 4px;
-    width: 530px;
+    width: 480px;
   }
 }
