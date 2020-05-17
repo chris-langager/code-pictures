@@ -40,18 +40,18 @@
 
 @media (max-width: 480px) {
   .card {
-    width: 105px;
-    height: 105px;
+    width: 97px;
+    height: 97px;
   }
 
   .card .picture {
-    width: 103px;
-    height: 103px;
+    width: 95px;
+    height: 95px;
   }
 
   .card .overlay {
-    width: 103px;
-    height: 103px;
+    width: 95px;
+    height: 95px;
   }
 }
 
