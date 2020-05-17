@@ -1,11 +1,42 @@
 import Head from 'next/head';
 import { Board } from '../components/Board';
-import { Card, Team } from '../../shared/reducer';
+import { Card, Team, reducer, State, Event } from '../../shared/reducer';
 import { Information } from '../components/Information';
-import { useState } from 'react';
+import { useState, useReducer, Context, Dispatch, createContext } from 'react';
+
+const initialState: State = {
+  id: 'ABCD',
+  board: newBoard(),
+  turn: 'red',
+  score: {
+    red: 0,
+    blue: 0,
+  },
+  deathCardPicked: null,
+};
+
+// export const TodosContext: Context<[State, Dispatch<Event>]> = React.createContext([
+//   initialState,
+//   (() => initialState) as React.Dispatch<Event>,
+// ]);
+
+// export const TodosReducerProvider: React.FC = (props) => {
+//   const [state, dispatch] = useReducer(reducer, initialState);
+
+//   return (
+//     <TodosContext.Provider value={[state, dispatch]}>
+//       {props.children}
+//     </TodosContext.Provider>
+//   );
+// };
+
+export const DispatchContext: Context<Dispatch<Event>> = createContext(
+  (() => initialState) as React.Dispatch<Event>
+);
 
 const GamePage: React.FC = () => {
-  const [cards] = useState(newBoard());
+  // const [cards] = useState(newBoard());
+  const [state, dispatch] = useReducer(reducer, initialState);
 
   return (
     <div className="container">
@@ -14,13 +45,15 @@ const GamePage: React.FC = () => {
         <link rel="icon" href="/favicon.ico" />
       </Head>
 
-      <div className="information-area">
-        <Information />
-      </div>
+      <DispatchContext.Provider value={dispatch}>
+        <div className="information-area">
+          <Information />
+        </div>
 
-      <div className="board-area">
-        <Board cards={cards} />
-      </div>
+        <div className="board-area">
+          <Board cards={state.board} />
+        </div>
+      </DispatchContext.Provider>
     </div>
   );
 };
@@ -40,19 +73,23 @@ function newBoard() {
 
   const startingTeamsCards = randomUniqueNumbers
     .splice(0, 9)
-    .map<Card>((i) => ({ id: cardIds[i], type: startingTeam, revealed: false }));
+    .map<Card>((i) => ({
+      id: i + '-' + cardIds[i],
+      type: startingTeam,
+      revealed: false,
+    }));
 
   const secondTeamsCards = randomUniqueNumbers
     .splice(0, 8)
-    .map<Card>((i) => ({ id: cardIds[i], type: secondTeam, revealed: false }));
+    .map<Card>((i) => ({ id: i + '-' + cardIds[i], type: secondTeam, revealed: false }));
 
   const neutralCards = randomUniqueNumbers
     .splice(0, 7)
-    .map<Card>((i) => ({ id: cardIds[i], type: 'neutral', revealed: false }));
+    .map<Card>((i) => ({ id: i + '-' + cardIds[i], type: 'neutral', revealed: false }));
 
   const deathCard = randomUniqueNumbers
     .splice(0, 1)
-    .map<Card>((i) => ({ id: cardIds[i], type: 'death', revealed: false }))[0];
+    .map<Card>((i) => ({ id: i + '-' + cardIds[i], type: 'death', revealed: false }))[0];
 
   const board: Card[] = shuffle([
     ...startingTeamsCards,

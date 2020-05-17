@@ -31,7 +31,7 @@ export interface CardSelected {
 
 export type Event = NewGameStarted | CardSelected;
 
-export function reduce(state: State, event: Event): State {
+export function reducer(state: State, event: Event): State {
   switch (event.type) {
     case 'NewGameStarted':
       return newGameStarted(state, event);
@@ -64,15 +64,20 @@ function cardSelected(state: State, event: CardSelected): State {
   const passiveTeam = activeTeam === 'red' ? 'blue' : 'red';
 
   const card = board.find((card) => card.id === id);
-  const otherCards = board.filter((card) => card.id !== id);
+
   if (!card) {
     console.warn(`card ${id} selected, but it wasnt on the board`);
     return state;
   }
 
+  const nextBoard = board.map((card) =>
+    card.id !== id ? card : { ...card, revealed: true }
+  );
+
   if (card.type === 'death') {
     return {
       ...state,
+      board: nextBoard,
       deathCardPicked: activeTeam,
     };
   }
@@ -80,7 +85,7 @@ function cardSelected(state: State, event: CardSelected): State {
   if (card.type === 'neutral') {
     return {
       ...state,
-      board: [...otherCards, { ...card, revealed: true }],
+      board: nextBoard,
       turn: passiveTeam,
     };
   }
@@ -88,15 +93,15 @@ function cardSelected(state: State, event: CardSelected): State {
   if (card.type === passiveTeam) {
     return {
       ...state,
-      board: [...otherCards, { ...card, revealed: true }],
+      board: nextBoard,
       turn: passiveTeam,
     };
   }
 
-  if (card.type === passiveTeam) {
+  if (card.type === activeTeam) {
     return {
       ...state,
-      board: [...otherCards, { ...card, revealed: true }],
+      board: nextBoard,
       score: {
         ...score,
         [activeTeam]: score[activeTeam] + 1,
