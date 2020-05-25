@@ -2,10 +2,18 @@ import Head from 'next/head';
 import { Board } from '../components/Board';
 import { reducer, State, Event } from '../../shared/reducer';
 import { Information } from '../components/Information';
-import { useState, useReducer, Context, Dispatch, createContext } from 'react';
-import { newBoard } from '../../shared/game';
+import {
+  useState,
+  useReducer,
+  Context,
+  Dispatch,
+  createContext,
+  useCallback,
+} from 'react';
+import { getNewGame } from '../../shared/game';
+import { Controls } from '../components/Controls';
 
-const { board, startingTeam } = newBoard();
+const { board, startingTeam } = getNewGame();
 
 const initialState: State = {
   id: 'ABCD',
@@ -26,6 +34,30 @@ const GamePage: React.FC = () => {
   const [state, dispatch] = useReducer(reducer, initialState);
   const [spyMaster, setSpymaster] = useState(false);
 
+  const toggleSpymaster = useCallback(() => {
+    setSpymaster(!spyMaster);
+  }, [spyMaster]);
+
+  const newGame = useCallback(() => {
+    if (!state.winner) {
+      const yes = confirm(
+        `You're in the middle of a game!  Do you want to end this game and start a new one?`
+      );
+      if (!yes) {
+        return;
+      }
+    }
+
+    setSpymaster(false);
+    const { board } = getNewGame();
+    dispatch({
+      type: 'NewGameStarted',
+      payload: {
+        board,
+      },
+    });
+  }, [state.winner]);
+
   return (
     <div className="container">
       <Head>
@@ -40,7 +72,10 @@ const GamePage: React.FC = () => {
               <Information />
             </div>
 
-            <button onClick={() => setSpymaster(!spyMaster)}> toggle spymaster</button>
+            <div className="controls-area">
+              <Controls setSpymaster={toggleSpymaster} newGame={newGame} />
+            </div>
+
             <div className="board-area">
               <Board cards={state.board} />
             </div>

@@ -53,6 +53,7 @@ function newGameStarted(state: State, event: NewGameStarted): State {
     ...state,
     board: event.payload.board,
     turn: redCardsCount > blueCardsCount ? 'red' : 'blue',
+    winner: null,
   };
 }
 

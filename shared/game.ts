@@ -1,6 +1,6 @@
-import { Team, Card, State } from './reducer';
+import { Team, Card } from './reducer';
 
-export function newBoard() {
+export function getNewGame() {
   //all the cards
   const cardIds = Array(50).fill('whale_draft.png', 0, 50);
 
