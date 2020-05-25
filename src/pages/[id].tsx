@@ -12,6 +12,7 @@ import {
 } from 'react';
 import { getNewGame } from '../../shared/game';
 import { Controls } from '../components/Controls';
+import { Contact } from '../components/Contact';
 
 const { board, startingTeam } = getNewGame();
 
@@ -74,6 +75,10 @@ const GamePage: React.FC = () => {
 
             <div className="controls-area">
               <Controls setSpymaster={toggleSpymaster} newGame={newGame} />
+            </div>
+
+            <div className="contact-area">
+              <Contact />
             </div>
 
             <div className="board-area">

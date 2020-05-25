@@ -1,0 +1,9 @@
+.contact {
+  font-size: medium;
+  text-align: left;
+  display: flex;
+  flex-direction: column;
+
+  padding: 10px;
+  width: 100%;
+}

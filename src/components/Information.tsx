@@ -17,7 +17,7 @@ export const Information: React.FC<Props> = ({}) => {
 
   return (
     <div className="information">
-      <h1>Code Pictures</h1>
+      <h1 className="logo">Code Pictures</h1>
 
       <p>Link to this game. (click to copy)</p>
 
