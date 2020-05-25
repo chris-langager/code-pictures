@@ -3,7 +3,7 @@ import { GameStateContext } from '../pages/[id]';
 
 interface Props {}
 export const Information: React.FC<Props> = ({}) => {
-  const { turn, board } = useContext(GameStateContext);
+  const { turn, board, winner } = useContext(GameStateContext);
 
   const activeTeam = turn;
   const redCardsRemaining = board.reduce(
@@ -27,7 +27,13 @@ export const Information: React.FC<Props> = ({}) => {
         <li>Blue - {blueCardsRemaining}</li>
       </ul>
 
-      <p>It's the {activeTeam} teams turn!</p>
+      {winner && (
+        <p>
+          <strong>The {winner} team won!</strong>
+        </p>
+      )}
+
+      {!winner && <p>It's the {activeTeam} teams turn!</p>}
     </div>
   );
 };
