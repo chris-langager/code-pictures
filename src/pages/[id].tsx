@@ -84,13 +84,15 @@ const GamePage: React.FC = () => {
 
     setSpymaster(false);
     const { board } = getNewGame();
-    dispatch({
+    const event: Event = {
       type: 'NewGameStarted',
       payload: {
         board,
       },
-    });
-  }, [state]);
+    };
+    dispatch(event);
+    socket.send(event);
+  }, [state, socket]);
 
   if (!state) {
     return (
