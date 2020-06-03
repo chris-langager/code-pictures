@@ -1,6 +1,11 @@
-import { Card as CardData, CardType } from '../../shared/reducer';
+import { Card as CardData, CardType, Event } from '../../shared/reducer';
 import { useState, useContext } from 'react';
-import { DispatchContext, SpymasterContext, GameStateContext } from '../pages/[id]';
+import {
+  DispatchContext,
+  SpymasterContext,
+  GameStateContext,
+  SocketContext,
+} from '../pages/[id]';
 
 interface Props {
   card: CardData;
@@ -9,13 +14,17 @@ export const Card: React.FC<Props> = ({ card }) => {
   const { winner } = useContext(GameStateContext);
   const dispatch = useContext(DispatchContext);
   const spyMaster = useContext(SpymasterContext);
+  const socket = useContext(SocketContext);
+
+  const onClick = () => {
+    const event: Event = { type: 'CardSelected', payload: { id } };
+    dispatch(event);
+    socket.send(event);
+  };
 
   const { id, type, revealed } = card;
   return (
-    <div
-      className={`card  ${winner ? 'winner' : ''} `}
-      onClick={() => dispatch({ type: 'CardSelected', payload: { id } })}
-    >
+    <div className={`card  ${winner ? 'winner' : ''} `} onClick={onClick}>
       <div
         className="picture"
         style={{

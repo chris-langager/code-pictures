@@ -13,6 +13,7 @@ export interface State {
   turn: Team;
   winner: Team | null;
 }
+export type Game = State;
 
 export interface NewGameStarted {
   type: 'NewGameStarted';
@@ -28,17 +29,23 @@ export interface CardSelected {
   };
 }
 
-export type Event = NewGameStarted | CardSelected;
+export interface SyncedWithServer {
+  type: 'SyncedWithServer';
+  payload: {
+    state: State;
+  };
+}
+
+export type Event = NewGameStarted | CardSelected | SyncedWithServer;
 
 export function reducer(state: State, event: Event): State {
   switch (event.type) {
+    case 'SyncedWithServer':
+      return event.payload.state;
     case 'NewGameStarted':
       return newGameStarted(state, event);
     case 'CardSelected':
-      const nextState = cardSelected(state, event);
-      return {
-        ...nextState,
-      };
+      return cardSelected(state, event);
     default:
       return state;
   }
@@ -51,6 +58,7 @@ function newGameStarted(state: State, event: NewGameStarted): State {
   const blueCardsCount = board.filter((card) => card.type === 'blue').length;
   return {
     ...state,
+    id: 'ABCD',
     board: event.payload.board,
     turn: redCardsCount > blueCardsCount ? 'red' : 'blue',
     winner: null,
